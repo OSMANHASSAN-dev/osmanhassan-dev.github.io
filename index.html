@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Osman Hassan | AI & Data Science Portfolio</title>
+  <meta name="description" content="Final Year CS Student specializing in AI, Data Science, and Machine Learning." />
+
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <!-- Google Fonts: Syne + DM Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES
+    ============================================================ */
+    :root {
+      --bg:          #080c10;
+      --bg-card:     #0d1117;
+      --bg-card2:    #111820;
+      --border:      rgba(255,255,255,0.07);
+      --accent:      #00d4ff;
+      --accent2:     #7b61ff;
+      --accent3:     #00ffb3;
+      --text:        #e8edf3;
+      --text-dim:    #8899aa;
+      --text-faint:  #445566;
+      --radius:      14px;
+      --radius-sm:   8px;
+      --font-head:   'Syne', sans-serif;
+      --font-mono:   'DM Mono', monospace;
+      --nav-h:       68px;
+      --glow:        0 0 40px rgba(0,212,255,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    h1,h2,h3,h4,h5 { font-family: var(--font-head); font-weight: 700; line-height: 1.2; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent3); }
+    ::selection { background: rgba(0,212,255,0.25); color: #fff; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 10px; }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: .4;
+    }
+
+    /* Grid bg */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* ============================================================ SECTION */
+    .section { padding: 100px 0 80px; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    .section-title { font-size: clamp(1.9rem,4vw,2.8rem); font-weight: 800; color: #fff; margin-bottom: 14px; }
+    .section-sub { color: var(--text-dim); max-width: 560px; font-size: 0.93rem; }
+    .divider {
+      width: 52px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 4px; margin: 16px 0 48px;
+    }
+
+    /* ============================================================ NAVBAR */
+    #navbar {
+      height: var(--nav-h);
+      background: rgba(8,12,16,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1050;
+    }
+    #navbar .navbar-brand { font-family: var(--font-head); font-size: 1.2rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+    #navbar .navbar-brand span { color: var(--accent); }
+    .nav-link {
+      font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.06em;
+      color: var(--text-dim) !important; padding: 6px 14px !important;
+      border-radius: 6px; transition: color .2s, background .2s; position: relative;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--accent) !important; background: rgba(0,212,255,0.07); }
+    .navbar-toggler { border: 1px solid var(--border); }
+    .navbar-toggler-icon { filter: invert(1); }
+
+    /* ============================================================ HERO */
+    #home { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+    .blob-1 {
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(0,212,255,.12), transparent 70%);
+      top: -120px; right: -140px;
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+    .blob-2 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(123,97,255,.10), transparent 70%);
+      bottom: -100px; left: -100px;
+      animation: drift 10s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes drift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,20px) scale(1.08); }
+    }
+    .hero-pre {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+      margin-bottom: 18px; opacity: 0; animation: fadeUp .7s .2s forwards;
+    }
+    .hero-name {
+      font-size: clamp(2.8rem,8vw,5.5rem); font-weight: 800; color: #fff;
+      line-height: 1.0; letter-spacing: -0.03em;
+      opacity: 0; animation: fadeUp .7s .4s forwards;
+    }
+    .hero-name .accent-dot { color: var(--accent); }
+    .hero-title {
+      font-family: var(--font-mono); font-size: clamp(0.85rem,2vw,1.05rem);
+      color: var(--text-dim); margin: 18px 0 10px;
+      opacity: 0; animation: fadeUp .7s .6s forwards;
+    }
+    .typed-wrap {
+      font-family: var(--font-mono); font-size: clamp(0.9rem,2vw,1.1rem);
+      color: var(--accent3); min-height: 1.8em;
+      opacity: 0; animation: fadeUp .7s .75s forwards;
+    }
+    .typed-cursor {
+      display: inline-block; width: 2px; height: 1.1em;
+      background: var(--accent); margin-left: 2px;
+      vertical-align: text-bottom; animation: blink .8s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .hero-tagline {
+      color: var(--text-dim); font-size: 0.92rem; margin: 20px 0 36px;
+      max-width: 480px; opacity: 0; animation: fadeUp .7s .9s forwards;
+    }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; opacity: 0; animation: fadeUp .7s 1.05s forwards; }
+    .scroll-hint {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--text-faint); font-size: 0.7rem; letter-spacing: 0.14em;
+      text-transform: uppercase; animation: fadeIn 1s 2s both;
+    }
+    .scroll-hint .line {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollLine 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%   { opacity:0; transform:scaleY(0); transform-origin:top; }
+      50%  { opacity:1; transform:scaleY(1); transform-origin:top; }
+      100% { opacity:0; transform:scaleY(1); transform-origin:bottom; }
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+
+    /* ============================================================ BUTTONS */
+    .btn-primary-custom {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 26px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-family: var(--font-mono); font-size: 0.82rem;
+      letter-spacing: 0.06em; border: none; border-radius: var(--radius-sm);
+      cursor: pointer; transition: transform .2s, box-shadow .2s, opacity .2s; font-weight: 500;
+    }
+    .btn-primary-custom:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,212,255,0.3); color:#fff; opacity:.92; }
+    .btn-outline-custom {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px; background: transparent; color: var(--accent);
+      font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.06em;
+      border: 1px solid rgba(0,212,255,0.4); border-radius: var(--radius-sm);
+      cursor: pointer; transition: transform .2s, background .2s, border-color .2s; font-weight: 500;
+    }
+    .btn-outline-custom:hover { background: rgba(0,212,255,0.08); border-color: var(--accent); transform: translateY(-2px); color: var(--accent); }
+    .btn-ghost-custom {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px; background: transparent; color: var(--text-dim);
+      font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.06em;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      cursor: pointer; transition: transform .2s, color .2s, border-color .2s;
+    }
+    .btn-ghost-custom:hover { color: var(--text); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+    /* ============================================================ ABOUT */
+    .about-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 40px; position: relative; overflow: hidden;
+    }
+    .about-card::before {
+      content: ''; position: absolute; top:0;left:0;right:0; height:2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+    }
+    .about-avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; font-family: var(--font-head); font-weight: 800;
+      color: #fff; margin-bottom: 20px; flex-shrink: 0;
+    }
+    .about-stat {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 20px 24px; text-align: center;
+    }
+    .about-stat .num { font-size: 2rem; font-family: var(--font-head); font-weight: 800; color: var(--accent); display: block; }
+    .about-stat .lbl { font-size: 0.76rem; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; }
+    .about-list li {
+      color: var(--text-dim); font-size: 0.9rem; padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .about-list li:last-child { border-bottom: none; }
+    .about-list li::before { content: '▸'; color: var(--accent); font-size: 0.75rem; flex-shrink: 0; }
+
+    /* ============================================================ PROJECTS */
+    #projects { background: var(--bg-card); }
+    .project-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px; height: 100%;
+      display: flex; flex-direction: column; position: relative; overflow: hidden;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+    }
+    .project-card::before {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg,rgba(0,212,255,0.04),transparent 60%);
+      opacity:0; transition: opacity .3s;
+    }
+    .project-card:hover { transform:translateY(-6px); border-color:rgba(0,212,255,0.25); box-shadow:var(--glow); }
+    .project-card:hover::before { opacity:1; }
+    .project-num { font-size:0.7rem; font-family:var(--font-mono); letter-spacing:0.15em; color:var(--accent); text-transform:uppercase; margin-bottom:12px; }
+    .project-title { font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:10px; line-height:1.3; }
+    .project-desc { color:var(--text-dim); font-size:0.87rem; flex:1; margin-bottom:20px; }
+    .project-problem {
+      background:rgba(255,100,100,0.06); border-left:2px solid rgba(255,100,100,0.4);
+      padding:8px 14px; border-radius:0 6px 6px 0; font-size:0.82rem; color:var(--text-dim); margin-bottom:8px;
+    }
+    .project-solution {
+      background:rgba(0,255,179,0.05); border-left:2px solid rgba(0,255,179,0.3);
+      padding:8px 14px; border-radius:0 6px 6px 0; font-size:0.82rem; color:var(--text-dim); margin-bottom:18px;
+    }
+    .tech-stack { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+    .tech-tag {
+      font-family:var(--font-mono); font-size:0.72rem; padding:4px 12px; border-radius:20px;
+      background:rgba(123,97,255,0.1); border:1px solid rgba(123,97,255,0.25); color:var(--accent2); letter-spacing:0.04em;
+    }
+    .project-btns { display:flex; gap:10px; flex-wrap:wrap; }
+
+    /* ============================================================ SKILLS */
+    .skill-group {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px; height: 100%;
+      transition: border-color .3s;
+    }
+    .skill-group:hover { border-color: rgba(0,212,255,0.2); }
+    .skill-group-title {
+      font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .skill-group-title::after { content:''; flex:1; height:1px; background:var(--border); }
+    .skill-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 6px;
+      background: var(--bg-card2); border: 1px solid var(--border);
+      color: var(--text); font-size: 0.82rem; margin: 5px;
+      transition: background .2s, border-color .2s, transform .2s, color .2s; cursor: default;
+    }
+    .skill-badge:hover { background:rgba(0,212,255,0.07); border-color:rgba(0,212,255,0.3); color:var(--accent); transform:translateY(-2px); }
+    .skill-badge i { font-size:0.9rem; color:var(--accent2); }
+
+    /* ============================================================ EXPERIENCE */
+    #experience { background: var(--bg-card); }
+    .timeline { position:relative; padding-left:32px; }
+    .timeline::before {
+      content:''; position:absolute; left:8px; top:8px; bottom:8px; width:2px;
+      background:linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    }
+    .timeline-item { position:relative; margin-bottom:44px; }
+    .timeline-item:last-child { margin-bottom:0; }
+    .timeline-dot {
+      position:absolute; left:-28px; top:6px;
+      width:14px; height:14px; border-radius:50%;
+      background:var(--accent); border:2px solid var(--bg-card);
+      box-shadow:0 0 12px var(--accent);
+    }
+    .exp-card {
+      background:var(--bg); border:1px solid var(--border);
+      border-radius:var(--radius); padding:28px 32px;
+      position:relative; overflow:hidden; transition:border-color .3s;
+    }
+    .exp-card::before {
+      content:''; position:absolute; top:0;left:0;right:0; height:2px;
+      background:linear-gradient(90deg, var(--accent), transparent);
+    }
+    .exp-card:hover { border-color:rgba(0,212,255,0.25); }
+    .exp-role { font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:4px; }
+    .exp-company { color:var(--accent); font-size:0.88rem; margin-bottom:4px; font-family:var(--font-mono); }
+    .exp-period { font-size:0.78rem; color:var(--text-faint); font-family:var(--font-mono); letter-spacing:0.08em; margin-bottom:18px; }
+    .exp-badge {
+      display:inline-block; padding:3px 10px;
+      background:rgba(0,255,179,0.08); border:1px solid rgba(0,255,179,0.2);
+      border-radius:20px; color:var(--accent3); font-size:0.72rem;
+      letter-spacing:0.1em; text-transform:uppercase; margin-bottom:14px;
+    }
+    .exp-tasks { list-style:none; padding:0; }
+    .exp-tasks li {
+      color:var(--text-dim); font-size:0.87rem; padding:5px 0;
+      display:flex; align-items:flex-start; gap:10px;
+    }
+    .exp-tasks li::before { content:'▸'; color:var(--accent); font-size:0.72rem; margin-top:4px; flex-shrink:0; }
+
+    /* ============================================================ CERTIFICATIONS */
+    .cert-card {
+      background:var(--bg-card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:24px 28px;
+      display:flex; align-items:center; gap:20px;
+      transition:border-color .3s, transform .3s; height:100%;
+    }
+    .cert-card:hover { border-color:rgba(0,212,255,0.25); transform:translateY(-4px); }
+    .cert-icon {
+      width:52px; height:52px; border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem; flex-shrink:0;
+    }
+    .cert-name { font-weight:600; color:#fff; font-size:0.92rem; margin-bottom:4px; }
+    .cert-issuer { font-size:0.77rem; color:var(--text-faint); font-family:var(--font-mono); }
+
+    /* ============================================================ RESUME */
+    #resume { background: var(--bg-card); }
+    .resume-preview {
+      background:var(--bg); border:1px solid var(--border);
+      border-radius:var(--radius); padding:60px 40px; text-align:center;
+      position:relative; overflow:hidden;
+    }
+    .resume-preview::before {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(-45deg,transparent,transparent 14px,rgba(0,212,255,0.015) 14px,rgba(0,212,255,0.015) 28px);
+    }
+    .resume-icon-wrap {
+      width:88px; height:88px; border-radius:20px;
+      background:linear-gradient(135deg,rgba(0,212,255,0.12),rgba(123,97,255,0.12));
+      border:1px solid rgba(0,212,255,0.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:2.4rem; margin:0 auto 24px; color:var(--accent);
+    }
+
+    /* ============================================================ CONTACT */
+    .contact-item {
+      display:flex; align-items:center; gap:16px;
+      padding:16px 20px; background:var(--bg-card); border:1px solid var(--border);
+      border-radius:var(--radius-sm); transition:border-color .3s, transform .2s;
+      text-decoration:none; color:var(--text);
+    }
+    .contact-item:hover { border-color:rgba(0,212,255,0.3); transform:translateX(4px); color:var(--text); }
+    .contact-icon {
+      width:42px; height:42px; border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; color:#fff; flex-shrink:0;
+    }
+    .contact-label { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--text-faint); font-family:var(--font-mono); }
+    .contact-value { font-size:0.88rem; color:var(--text); }
+    .form-control-custom {
+      background:var(--bg-card); border:1px solid var(--border);
+      border-radius:var(--radius-sm); color:var(--text);
+      font-family:var(--font-mono); font-size:0.87rem; padding:13px 16px;
+      width:100%; outline:none; transition:border-color .2s;
+    }
+    .form-control-custom:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(0,212,255,0.08); }
+    .form-control-custom::placeholder { color:var(--text-faint); }
+    .form-label-custom {
+      font-size:0.76rem; letter-spacing:0.1em; text-transform:uppercase;
+      color:var(--text-dim); font-family:var(--font-mono); margin-bottom:8px; display:block;
+    }
+
+    /* ============================================================ FOOTER */
+    footer { background:var(--bg-card); border-top:1px solid var(--border); padding:36px 0; }
+    .footer-brand { font-family:var(--font-head); font-size:1.05rem; font-weight:800; color:#fff; }
+    .footer-brand span { color:var(--accent); }
+    .footer-text { font-size:0.8rem; color:var(--text-faint); }
+    .social-link {
+      width:38px; height:38px; border-radius:8px;
+      background:var(--bg); border:1px solid var(--border);
+      display:inline-flex; align-items:center; justify-content:center;
+      color:var(--text-dim); font-size:1rem;
+      transition:background .2s, color .2s, border-color .2s, transform .2s;
+    }
+    .social-link:hover { background:rgba(0,212,255,0.1); border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+    /* ============================================================ REVEAL ANIMATIONS */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    /* ============================================================ RESPONSIVE */
+    @media (max-width:767px) {
+      .section { padding:70px 0 60px; }
+      .hero-name { letter-spacing:-0.02em; }
+      .about-card { padding:26px; }
+      .project-card { padding:24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#home">OH<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+          <li class="nav-item"><a class="nav-link" href="#certifications">Certs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#resume">Resume</a></li>
+          <li class="nav-item ms-lg-2">
+            <a class="btn-primary-custom" href="#contact" style="padding:9px 20px;font-size:0.78rem;">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home" class="grid-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="container" style="position:relative;z-index:2">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <p class="hero-pre">// Welcome to my portfolio</p>
+          <h1 class="hero-name">Osman<br>Hassan<span class="accent-dot">.</span></h1>
+          <p class="hero-title">Final Year Computer Science Student &nbsp;|&nbsp; AI &amp; Data Science &nbsp;|&nbsp; Machine Learning</p>
+          <div class="typed-wrap">
+            <span id="typed-text"></span><span class="typed-cursor"></span>
+          </div>
+          <p class="hero-tagline">Building practical systems using data and intelligent technologies — turning ideas into deployed solutions.</p>
+          <div class="hero-btns">
+            <a class="btn-primary-custom" href="#projects"><i class="bi bi-grid-3x3-gap"></i> View Projects</a>
+            <a class="btn-outline-custom" href="resume.pdf" target="_blank"><i class="bi bi-file-earmark-person"></i> View Resume</a>
+            <a class="btn-ghost-custom" href="#contact"><i class="bi bi-envelope"></i> Contact Me</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-lg-6 reveal">
+          <p class="section-label">// 01 — About Me</p>
+          <h2 class="section-title">Who I Am</h2>
+          <div class="divider"></div>
+          <div class="about-card mb-4">
+            <div class="d-flex align-items-center gap-3" style="margin-bottom:20px">
+              <div class="about-avatar">OH</div>
+              <div>
+                <div style="font-weight:700;color:#fff;font-size:1.05rem;">Osman Hassan</div>
+                <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-dim);">BSc Computer Science</div>
+                <div style="font-family:var(--font-mono);font-size:0.78rem;color:var(--accent);">Mount Kenya University, Kenya</div>
+              </div>
+            </div>
+            <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:20px;">
+              Final year Computer Science student with a deep focus on <span style="color:var(--accent)">Artificial Intelligence</span>,
+              <span style="color:var(--accent)">Data Science</span>, and <span style="color:var(--accent)">Machine Learning</span>.
+              I enjoy translating complex data problems into actionable insights and building end-to-end systems that make a real difference.
+            </p>
+            <ul class="about-list list-unstyled mb-0">
+              <li>Strong Python developer with real-world project experience</li>
+              <li>Proficient in data analysis, EDA, and visualization</li>
+              <li>Experience with SQL, relational databases, and backend development</li>
+              <li>Cisco Networking fundamentals &amp; software architecture</li>
+              <li>Currently interning as a Data Scientist at CodeAlpha</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6 reveal" style="transition-delay:.15s">
+          <div class="row g-3 mb-3">
+            <div class="col-6"><div class="about-stat"><span class="num">3+</span><span class="lbl">Projects Built</span></div></div>
+            <div class="col-6"><div class="about-stat"><span class="num">4+</span><span class="lbl">Certifications</span></div></div>
+            <div class="col-6"><div class="about-stat"><span class="num">10+</span><span class="lbl">Technologies</span></div></div>
+            <div class="col-6"><div class="about-stat"><span class="num">1</span><span class="lbl">Active Internship</span></div></div>
+          </div>
+          <div class="about-card">
+            <p class="section-label mb-3">Current Focus Areas</p>
+            <div class="d-flex flex-wrap">
+              <span class="skill-badge"><i class="bi bi-cpu"></i> Machine Learning</span>
+              <span class="skill-badge"><i class="bi bi-bar-chart-line"></i> Data Analysis</span>
+              <span class="skill-badge"><i class="bi bi-braces"></i> Python</span>
+              <span class="skill-badge"><i class="bi bi-diagram-3"></i> AI Systems</span>
+              <span class="skill-badge"><i class="bi bi-server"></i> MySQL</span>
+              <span class="skill-badge"><i class="bi bi-globe2"></i> Web Dev</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <p class="section-label">// 02 — Projects</p>
+        <h2 class="section-title">What I've Built</h2>
+        <div class="divider mx-auto"></div>
+        <p class="section-sub mx-auto">A selection of projects demonstrating my skills in AI, data science, and full-stack development.</p>
+      </div>
+      <div class="row g-4">
+
+        <!-- Project 1 -->
+        <div class="col-lg-4 col-md-6 reveal">
+          <div class="project-card">
+            <div class="project-num">Project 01 &nbsp;/&nbsp; Featured</div>
+            <h3 class="project-title">AI-Driven Zoo Visitor Engagement &amp; Wildlife Monitoring</h3>
+            <div class="project-problem"><strong style="color:#ff8080">Problem:</strong> Limited wildlife monitoring and low visitor engagement at zoos.</div>
+            <div class="project-solution"><strong style="color:var(--accent3)">Solution:</strong> Web platform combining real-time wildlife tracking with interactive visitor features.</div>
+            <div class="tech-stack">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">PHP</span>
+              <span class="tech-tag">MySQL</span>
+              <span class="tech-tag">Bootstrap</span>
+            </div>
+            <div class="project-btns mt-auto">
+              <a href="https://github.com/OSMANHASSAN-dev" target="_blank" class="btn-outline-custom" style="font-size:0.78rem;padding:9px 18px;">
+                <i class="bi bi-github"></i> GitHub
+              </a>
+              <a href="#" class="btn-ghost-custom" style="font-size:0.78rem;padding:9px 18px;">
+                <i class="bi bi-box-arrow-up-right"></i> Demo
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="col-lg-4 col-md-6 reveal" style="transition-delay:.1s">
+          <div class="project-card">
+            <div class="project-num">Project 02</div>
+            <h3 class="project-title">Eventify — Web Ticketing &amp; Event Streaming</h3>
+            <p class="project-desc">
+              A fully responsive web application for browsing events, purchasing tickets, and accessing live event streams.
+              Features dynamic event listings, a clean booking flow, and a modern UI.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-tag">HTML5</span>
+              <span class="tech-tag">CSS3</span>
+              <span class="tech-tag">JavaScript</span>
+              <span class="tech-tag">Bootstrap</span>
+            </div>
+            <div class="project-btns mt-auto">
+              <a href="https://github.com/OSMANHASSAN-dev" target="_blank" class="btn-outline-custom" style="font-size:0.78rem;padding:9px 18px;">
+                <i class="bi bi-github"></i> GitHub
+              </a>
+              <a href="#" class="btn-ghost-custom" style="font-size:0.78rem;padding:9px 18px;">
+                <i class="bi bi-box-arrow-up-right"></i> Demo
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="col-lg-4 col-md-6 reveal" style="transition-delay:.2s">
+          <div class="project-card">
+            <div class="project-num">Project 03</div>
+            <h3 class="project-title">Scientific Computing &amp; Data Analysis</h3>
+            <p class="project-desc">
+              A collection of data-driven notebooks covering real-world datasets — data cleaning, exploratory analysis,
+              statistical summaries, and publication-quality visualizations.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">Pandas</span>
+              <span class="tech-tag">NumPy</span>
+              <span class="tech-tag">Matplotlib</span>
+            </div>
+            <div class="project-btns mt-auto">
+              <a href="https://github.com/OSMANHASSAN-dev" target="_blank" class="btn-outline-custom" style="font-size:0.78rem;padding:9px 18px;">
+                <i class="bi bi-github"></i> GitHub
+              </a>
+              <a href="#" class="btn-ghost-custom" style="font-size:0.78rem;padding:9px 18px;">
+                <i class="bi bi-box-arrow-up-right"></i> Demo
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section" style="background:var(--bg);">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <p class="section-label">// 03 — Skills</p>
+        <h2 class="section-title">My Tech Stack</h2>
+        <div class="divider mx-auto"></div>
+        <p class="section-sub mx-auto">Tools and technologies I work with to build intelligent, data-driven systems.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6 reveal">
+          <div class="skill-group">
+            <div class="skill-group-title"><i class="bi bi-code-slash"></i> Programming</div>
+            <div>
+              <span class="skill-badge"><i class="bi bi-filetype-py"></i> Python</span>
+              <span class="skill-badge"><i class="bi bi-filetype-js"></i> JavaScript</span>
+              <span class="skill-badge"><i class="bi bi-filetype-php"></i> PHP</span>
+              <span class="skill-badge"><i class="bi bi-cup-hot"></i> Java</span>
+              <span class="skill-badge"><i class="bi bi-terminal"></i> C</span>
+              <span class="skill-badge"><i class="bi bi-terminal-fill"></i> C++</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:.1s">
+          <div class="skill-group">
+            <div class="skill-group-title"><i class="bi bi-cpu"></i> Data &amp; AI</div>
+            <div>
+              <span class="skill-badge"><i class="bi bi-table"></i> Pandas</span>
+              <span class="skill-badge"><i class="bi bi-calculator"></i> NumPy</span>
+              <span class="skill-badge"><i class="bi bi-diagram-2"></i> Scikit-learn</span>
+              <span class="skill-badge"><i class="bi bi-bar-chart"></i> Data Analysis</span>
+              <span class="skill-badge"><i class="bi bi-search"></i> EDA</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:.2s">
+          <div class="skill-group">
+            <div class="skill-group-title"><i class="bi bi-globe"></i> Web</div>
+            <div>
+              <span class="skill-badge"><i class="bi bi-filetype-html"></i> HTML</span>
+              <span class="skill-badge"><i class="bi bi-filetype-css"></i> CSS</span>
+              <span class="skill-badge"><i class="bi bi-bootstrap"></i> Bootstrap</span>
+              <span class="skill-badge"><i class="bi bi-arrow-repeat"></i> React</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:.3s">
+          <div class="skill-group">
+            <div class="skill-group-title"><i class="bi bi-tools"></i> Tools</div>
+            <div>
+              <span class="skill-badge"><i class="bi bi-git"></i> Git</span>
+              <span class="skill-badge"><i class="bi bi-github"></i> GitHub</span>
+              <span class="skill-badge"><i class="bi bi-database"></i> MySQL</span>
+              <span class="skill-badge"><i class="bi bi-code-square"></i> VS Code</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 mb-5 mb-lg-0 reveal">
+          <p class="section-label">// 04 — Experience</p>
+          <h2 class="section-title">Work History</h2>
+          <div class="divider"></div>
+          <p style="color:var(--text-dim);font-size:0.9rem;">
+            Hands-on professional experience applying data science and machine learning in a real internship environment,
+            building skills that go beyond the classroom.
+          </p>
+        </div>
+        <div class="col-lg-7 reveal" style="transition-delay:.15s">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="exp-card">
+                <div class="exp-role">Data Scientist Intern</div>
+                <div class="exp-company">CodeAlpha</div>
+                <div class="exp-period">March 2026 – Present</div>
+                <span class="exp-badge">&#x25CF; Active</span>
+                <ul class="exp-tasks">
+                  <li>Data analysis and insight extraction using Python</li>
+                  <li>Data cleaning, preprocessing, and feature engineering</li>
+                  <li>Building and evaluating basic machine learning models</li>
+                  <li>Creating data visualizations and dashboards for reporting</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications" class="section" style="background:var(--bg);">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <p class="section-label">// 05 — Certifications</p>
+        <h2 class="section-title">Credentials &amp; Learning</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6 reveal">
+          <div class="cert-card">
+            <div class="cert-icon">🤖</div>
+            <div>
+              <div class="cert-name">AI Fundamentals</div>
+              <div class="cert-issuer">IBM SkillsBuild</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 reveal" style="transition-delay:.08s">
+          <div class="cert-card">
+            <div class="cert-icon">🐍</div>
+            <div>
+              <div class="cert-name">Introduction to Data Analysis Using Python</div>
+              <div class="cert-issuer">Online Certification</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 reveal" style="transition-delay:.16s">
+          <div class="cert-card">
+            <div class="cert-icon">📊</div>
+            <div>
+              <div class="cert-name">Data Science Essentials with Python</div>
+              <div class="cert-issuer">Online Certification</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 reveal" style="transition-delay:.24s">
+          <div class="cert-card">
+            <div class="cert-icon">🔍</div>
+            <div>
+              <div class="cert-name">Google Data Analytics</div>
+              <div class="cert-issuer">Google / Coursera</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume" class="section">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <p class="section-label">// 06 — Resume</p>
+        <h2 class="section-title">Download My CV</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-7 reveal">
+          <div class="resume-preview">
+            <div class="resume-icon-wrap">
+              <i class="bi bi-file-earmark-person-fill"></i>
+            </div>
+            <h4 style="color:#fff;font-family:var(--font-head);margin-bottom:8px;position:relative;">Osman Hassan</h4>
+            <p style="font-family:var(--font-mono);color:var(--text-dim);font-size:0.82rem;margin-bottom:6px;position:relative;">BSc Computer Science &nbsp;|&nbsp; AI &amp; Data Science</p>
+            <p style="font-family:var(--font-mono);color:var(--text-faint);font-size:0.78rem;margin-bottom:32px;position:relative;">Mount Kenya University &nbsp;·&nbsp; Class of 2025/2026</p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center" style="position:relative;">
+              <a href="resume.pdf" download class="btn-primary-custom">
+                <i class="bi bi-download"></i> Download Resume
+              </a>
+              <a href="resume.pdf" target="_blank" class="btn-outline-custom">
+                <i class="bi bi-eye"></i> View Resume
+              </a>
+            </div>
+            <p style="font-family:var(--font-mono);color:var(--text-faint);font-size:0.75rem;margin-top:20px;position:relative;">PDF format &nbsp;·&nbsp; Updated 2026</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section" style="background:var(--bg);">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <p class="section-label">// 07 — Contact</p>
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="divider mx-auto"></div>
+        <p class="section-sub mx-auto">Open to opportunities, collaborations, or a chat about AI and data. Reach out!</p>
+      </div>
+      <div class="row g-5">
+        <div class="col-lg-5 reveal">
+          <div class="d-flex flex-column gap-3">
+            <a href="mailto:osman@example.com" class="contact-item">
+              <div class="contact-icon"><i class="bi bi-envelope-fill"></i></div>
+              <div>
+                <div class="contact-label">Email</div>
+                <div class="contact-value">osman@example.com</div>
+              </div>
+              <i class="bi bi-arrow-up-right ms-auto" style="color:var(--text-faint)"></i>
+            </a>
+            <a href="https://github.com/OSMANHASSAN-dev" target="_blank" class="contact-item">
+              <div class="contact-icon" style="background:linear-gradient(135deg,#333,#555)"><i class="bi bi-github"></i></div>
+              <div>
+                <div class="contact-label">GitHub</div>
+                <div class="contact-value">OSMANHASSAN-dev</div>
+              </div>
+              <i class="bi bi-arrow-up-right ms-auto" style="color:var(--text-faint)"></i>
+            </a>
+            <a href="https://linkedin.com/in/hassano-6355a3369" target="_blank" class="contact-item">
+              <div class="contact-icon" style="background:linear-gradient(135deg,#0077b5,#005fa3)"><i class="bi bi-linkedin"></i></div>
+              <div>
+                <div class="contact-label">LinkedIn</div>
+                <div class="contact-value">Osman Hassan</div>
+              </div>
+              <i class="bi bi-arrow-up-right ms-auto" style="color:var(--text-faint)"></i>
+            </a>
+            <a href="https://osmanhassan-dev.github.io" target="_blank" class="contact-item">
+              <div class="contact-icon" style="background:linear-gradient(135deg,var(--accent3),var(--accent))"><i class="bi bi-globe2"></i></div>
+              <div>
+                <div class="contact-label">Portfolio</div>
+                <div class="contact-value">osmanhassan-dev.github.io</div>
+              </div>
+              <i class="bi bi-arrow-up-right ms-auto" style="color:var(--text-faint)"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-7 reveal" style="transition-delay:.15s">
+          <div class="about-card">
+            <h5 style="color:#fff;margin-bottom:24px;font-size:1rem;">Send a Message</h5>
+            <form id="contactForm" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label-custom">Name</label>
+                  <input type="text" class="form-control-custom" placeholder="Your Name" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">Email</label>
+                  <input type="email" class="form-control-custom" placeholder="your@email.com" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label-custom">Subject</label>
+                  <input type="text" class="form-control-custom" placeholder="What's this about?" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label-custom">Message</label>
+                  <textarea class="form-control-custom" rows="5" placeholder="Tell me more..." required style="resize:vertical;"></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn-primary-custom" style="width:100%;justify-content:center;padding:14px;">
+                    <i class="bi bi-send"></i> Send Message
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div id="formMsg" style="display:none;margin-top:14px;font-family:var(--font-mono);text-align:center;font-size:0.85rem;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+        <div>
+          <div class="footer-brand">Osman Hassan<span>.</span></div>
+          <div class="footer-text mt-1">© <span id="year"></span> &nbsp;·&nbsp; All rights reserved</div>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="https://github.com/OSMANHASSAN-dev" target="_blank" class="social-link"><i class="bi bi-github"></i></a>
+          <a href="https://linkedin.com/in/hassano-6355a3369" target="_blank" class="social-link"><i class="bi bi-linkedin"></i></a>
+          <a href="https://osmanhassan-dev.github.io" target="_blank" class="social-link"><i class="bi bi-globe2"></i></a>
+          <a href="mailto:osman@example.com" class="social-link"><i class="bi bi-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /* ===== TYPING EFFECT ===== */
+    const typedEl = document.getElementById('typed-text');
+    const phrases = [
+      'Building intelligent AI systems.',
+      'Solving problems with data.',
+      'Turning raw data into insights.',
+      'Training ML models that work.',
+      'Making machines learn.'
+    ];
+    let phraseIdx = 0, charIdx = 0, isDeleting = false;
+    function typeLoop() {
+      const phrase = phrases[phraseIdx];
+      if (isDeleting) {
+        typedEl.textContent = phrase.substring(0, charIdx--);
+        if (charIdx < 0) { isDeleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; setTimeout(typeLoop, 500); return; }
+      } else {
+        typedEl.textContent = phrase.substring(0, charIdx++);
+        if (charIdx > phrase.length) { isDeleting = true; setTimeout(typeLoop, 1800); return; }
+      }
+      setTimeout(typeLoop, isDeleting ? 42 : 68);
+    }
+    setTimeout(typeLoop, 1400);
+
+    /* ===== SCROLL REVEAL ===== */
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ===== ACTIVE NAV ===== */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      navLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+      });
+    }, { passive: true });
+
+    /* ===== FOOTER YEAR ===== */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ===== CONTACT FORM (demo) ===== */
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const msg = document.getElementById('formMsg');
+      msg.style.display = 'block';
+      msg.style.color = 'var(--accent3)';
+      msg.textContent = '✓ Message received! I\'ll get back to you soon.';
+      this.reset();
+      setTimeout(() => { msg.style.display = 'none'; }, 4000);
+    });
+
+    /* ===== MOBILE NAV: close on link click ===== */
+    document.querySelectorAll('#navMenu .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const el = document.getElementById('navMenu');
+        const bsCollapse = bootstrap.Collapse.getInstance(el);
+        if (bsCollapse) bsCollapse.hide();
+      });
+    });
+  </script>
+</body>
+</html>
