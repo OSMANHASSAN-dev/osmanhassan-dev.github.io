@@ -253,5 +253,5 @@ My fully responsive **dark-theme portfolio** built with HTML5, CSS3, JavaScript 
 </p>
 
 <p align="center">
-  <i>⭐ If you find my work useful, consider starring a repo — it means a lot!</i>
+  <i>⭐ If you find my work useful, consider starring a repository — it means a lot!</i>
 </p>
